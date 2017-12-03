@@ -29,7 +29,6 @@ const ScheduleView = ({ inProgress, nextEpisodes, pastEpisodes }) => {
                 airStamp={getFormattedTimeDifference(episode.airstamp, currentDate)}
                 season={episode.season}
                 number={episode.number}
-                image={R.path(['image', 'medium'], episode)}
               />))}
           </UpcomingContainer>
         ) : (

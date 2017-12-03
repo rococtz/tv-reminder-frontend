@@ -1,10 +1,12 @@
+import jwtDecode from 'jwt-decode';
+
 import config from '../utils/config';
 import AuthService from '../utils/AuthService';
 
 const SEARCH_URL = `https://${config.API_BASE_URL}/search/shows`;
 const SHOW_BY_ID_URL = `https://${config.API_BASE_URL}/shows`;
 const INITIAL_DATA_URL = `https://${config.BACKEND_BASE_URL}/api/initial-data`;
-const FAVORITE_IDS_URL = `https://${config.BACKEND_BASE_URL}/api/favorites`;
+const FAVORITE_IDS_URL = `${config.BACKEND_BASE_URL}/favorites`;
 
 export const getInitialData = () => new Promise((resolve, reject) => {
   var token = AuthService.getToken();
@@ -23,6 +25,7 @@ export const getInitialData = () => new Promise((resolve, reject) => {
 
 export const getFavoriteIds = () => new Promise((resolve, reject) => {
   var token = AuthService.getToken();
+  const decodedToken = jwtDecode(token);
   var myHeaders = new Headers();
   myHeaders.set('authorization', `bearer ${token}`);
   myHeaders.set('content-type', 'application/json');
@@ -31,7 +34,7 @@ export const getFavoriteIds = () => new Promise((resolve, reject) => {
     headers: myHeaders,
   };
 
-  fetch(FAVORITE_IDS_URL, request)
+  fetch(`${FAVORITE_IDS_URL}/${decodedToken.sub}`, request)
     .then(res => res.json())
     .then(resolve);
 });
@@ -59,6 +62,7 @@ export const getSearchResults = (query) => new Promise((resolve, reject) => {
 
 export const addShowToRemoteFavorites = showId => new Promise((resolve, reject) => {
   var token = AuthService.getToken();
+  const decodedToken = jwtDecode(token);
   var myHeaders = new Headers();
   myHeaders.set('authorization', `bearer ${token}`);
   myHeaders.set('content-type', 'application/json');
@@ -67,7 +71,7 @@ export const addShowToRemoteFavorites = showId => new Promise((resolve, reject) 
     headers: myHeaders,
   };
 
-  fetch(`${FAVORITE_IDS_URL}/${showId}`, request)
+  fetch(`${FAVORITE_IDS_URL}/${decodedToken.sub}/${showId}`, request)
     // .then(res => res.json())
     .then(response => {
       resolve();
@@ -76,6 +80,7 @@ export const addShowToRemoteFavorites = showId => new Promise((resolve, reject) 
 
 export const removeShowFromRemoteFavorites = showId => new Promise((resolve, reject) => {
   var token = AuthService.getToken();
+  const decodedToken = jwtDecode(token);
   var myHeaders = new Headers();
   myHeaders.set('authorization', `bearer ${token}`);
   myHeaders.set('content-type', 'application/json');
@@ -84,7 +89,7 @@ export const removeShowFromRemoteFavorites = showId => new Promise((resolve, rej
     headers: myHeaders,
   };
 
-  fetch(`${FAVORITE_IDS_URL}/${showId}`, request)
+  fetch(`${FAVORITE_IDS_URL}/${decodedToken.sub}/${showId}`, request)
     .then(response => {
       resolve();
     });

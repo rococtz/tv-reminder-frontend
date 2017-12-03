@@ -17,6 +17,10 @@ export const CardStyled = styled(Card)`
 
 export const TextStyled = styled.span`
   color: ${colors.divider};
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const CardMediaStyled = styled(CardMedia)`
