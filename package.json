@@ -12,18 +12,19 @@
     "starter"
   ],
   "dependencies": {
-    "auth0-lock": "^10.16.0",
+    "auth0-lock": "^11.33.0",
     "jwt-decode": "^2.2.0",
     "material-ui": "next",
     "material-ui-icons": "^1.0.0-beta.5",
-    "ramda": "^0.24.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "ramda": "^0.27.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-saga": "^0.15.6",
-    "styled-components": "^2.1.2"
+    "styled-components": "^4.0.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -40,6 +41,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
-  }
+    "lint": "eslint .",
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
+  },
+  "snyk": true
 }
